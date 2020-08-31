@@ -10,4 +10,5 @@ set(SRCS
 
 add_library(ng STATIC ${SRCS})
 
+target_include_directories(ng PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/src)
 target_link_libraries(ng)
