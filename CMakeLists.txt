@@ -6,6 +6,7 @@ project(ng)
 
 set(SRCS
     src/utils/Logger.cpp
+    src/graphics/impl/GLFWWindow.cpp
     src/Sample.cpp
 )
 
@@ -26,7 +27,14 @@ FetchContent_MakeAvailable(glfw)
 
 include_directories(${glfw_SOURCE_DIR}/include)
 
+
+#
+# GLAD
+#
+add_subdirectory(deps/glad)
+
+
 add_library(ng STATIC ${SRCS})
 
-target_include_directories(ng PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/src)
-target_link_libraries(ng)
+target_include_directories(ng PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(ng glad glfw)
