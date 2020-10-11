@@ -5,10 +5,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(ng)
 
 set(SRCS
+    src/utils/Logger.cpp
     src/Sample.cpp
 )
 
 add_library(ng STATIC ${SRCS})
 
-target_include_directories(ng PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/src)
+target_include_directories(ng PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/src)
 target_link_libraries(ng)
