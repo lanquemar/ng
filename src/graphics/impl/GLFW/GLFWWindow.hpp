@@ -29,6 +29,9 @@ namespace ng
           std::int32_t getWidth() const override;
           std::int32_t getHeight() const override;
 
+          void onKey(int, int, int, int);
+          void onResize(int, int);
+
         private:
           void _throwGLFWError();
 

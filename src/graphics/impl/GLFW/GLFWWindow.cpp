@@ -1,6 +1,19 @@
 #include "GLFWWindow.hpp"
 #include "exceptions/ErrorException.hpp"
 
+// GLFW callbacks
+static void onKey(GLFWwindow *window, int key, int scancode, int actions, int mods)
+{
+  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  obj->onKey(key, scancode, actions, mods);
+}
+
+static void onResize(GLFWwindow *window, int width, int height)
+{
+  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  obj->onResize(width, height);
+}
+
 namespace ng
 {
   namespace graphics
@@ -44,6 +57,11 @@ namespace ng
 
         glfwMakeContextCurrent(_window);
 
+        // Setup GLFW events callbacks
+        glfwSetWindowUserPointer(_window, this);
+        glfwSetKeyCallback(_window, ::onKey);
+        glfwSetWindowSizeCallback(_window, ::onResize);
+
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
           throw ErrorException("Failed to initialize OpenGL extensions");
         
@@ -78,6 +96,17 @@ namespace ng
       std::int32_t GLFWWindow::getHeight() const
       {
         return (_height);
+      }
+
+      void GLFWWindow::onKey(int key, int scancode, int actions, int mods)
+      {
+        // TODO: implement
+      }
+
+      void GLFWWindow::onResize(int width, int height)
+      {
+        _width = width;
+        _height = height;
       }
 
       void GLFWWindow::_throwGLFWError()
