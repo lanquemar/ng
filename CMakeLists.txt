@@ -6,7 +6,8 @@ project(ng)
 
 set(SRCS
     src/utils/Logger.cpp
-    src/graphics/impl/GLFWWindow.cpp
+    src/graphics/impl/GLFW/GLFWWindow.cpp
+    src/graphics/Window.cpp
     src/Sample.cpp
 )
 

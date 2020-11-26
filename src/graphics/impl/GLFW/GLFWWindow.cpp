@@ -23,7 +23,7 @@ namespace ng
 
       void GLFWWindow::open(const std::int32_t width, const std::int32_t height)
       {
-        if (glfwInit() == GLFW_FALSE)
+        if (!_initialized && glfwInit() == GLFW_FALSE)
           _throwGLFWError();
 
         _initialized = true;
@@ -70,12 +70,12 @@ namespace ng
         glfwPollEvents();
       }
 
-      const std::int32_t GLFWWindow::getWidth() const
+      std::int32_t GLFWWindow::getWidth() const
       {
         return (_width);
       }
 
-      const std::int32_t GLFWWindow::getHeight() const
+      std::int32_t GLFWWindow::getHeight() const
       {
         return (_height);
       }

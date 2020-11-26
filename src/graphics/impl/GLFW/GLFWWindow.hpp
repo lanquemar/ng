@@ -5,27 +5,29 @@
 
 #include <cstdint>
 
+#include "graphics/Window.hpp"
+
 namespace ng
 {
   namespace graphics
   {
     namespace impl
     {
-      class GLFWWindow
+      class GLFWWindow : public Window
       {
         public:
           GLFWWindow();
           ~GLFWWindow();
 
-          void open(const std::int32_t = 800, const std::int32_t = 600);
-          void close();
-          bool isOpen();
+          void open(const std::int32_t = 800, const std::int32_t = 600) override;
+          void close() override;
+          bool isOpen() override;
 
-          void draw();
-          void pollEvents();
+          void draw() override;
+          void pollEvents() override;
 
-          const std::int32_t getWidth() const;
-          const std::int32_t getHeight() const;
+          std::int32_t getWidth() const override;
+          std::int32_t getHeight() const override;
 
         private:
           void _throwGLFWError();
