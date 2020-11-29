@@ -1,0 +1,68 @@
+name: Builder
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prepare OS dependencies
+      shell: bash
+      run:  sudo apt-get update && sudo apt-get install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+
+    - name: Create build directory
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Generate CMake files
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create build directory
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Generate CMake files
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+  macos:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create build directory
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Generate CMake files
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
