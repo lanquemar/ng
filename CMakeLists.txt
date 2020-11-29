@@ -7,7 +7,9 @@ project(ng)
 set(SRCS
     src/utils/Logger.cpp
     src/graphics/impl/GLFW/GLFWWindow.cpp
+    src/graphics/objects/Mesh.cpp
     src/graphics/Window.cpp
+    src/io/formats/OBJFile.cpp
     src/io/Buffer.cpp
     src/io/File.cpp
     src/Sample.cpp
