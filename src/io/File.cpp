@@ -68,15 +68,15 @@ namespace ng
 
     void File::_open(int opts)
     {
-      std::ios_base::openmode mode = 0;
+      std::ios_base::openmode mode = (std::ios_base::openmode) 0;
 
       // TODO: replace by a real exception with a what
       if (_file.is_open() || _filename.length() < 1)
         throw new std::exception;
 
-      mode |= (_opts & READ) ? std::fstream::in : 0;
-      mode |= (_opts & WRITE) ? std::fstream::out : 0;
-      mode |= (_opts & BINARY) ? std::fstream::binary : 0;
+      mode |= (_opts & READ) ? std::fstream::in : (std::ios_base::openmode) 0;
+      mode |= (_opts & WRITE) ? std::fstream::out : (std::ios_base::openmode) 0;
+      mode |= (_opts & BINARY) ? std::fstream::binary : (std::ios_base::openmode) 0;
 
       _file.open(_filename, mode);
 
