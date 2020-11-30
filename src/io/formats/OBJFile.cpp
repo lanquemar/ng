@@ -133,8 +133,12 @@ namespace ng
     {
       float x, y, z;
 
-      sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
-      
+      #ifdef _WIN32
+        sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
+      #else
+        sscanf((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
+      #endif
+
       _OBJvertices.push_back(x);
       _OBJvertices.push_back(y);
       _OBJvertices.push_back(z);
@@ -144,7 +148,11 @@ namespace ng
     {
       float x, y;
 
-      sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f", &x, &y);
+      #ifdef _WIN32
+        sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f", &x, &y);
+      #else
+        sscanf((const char *)(buff.getPtr() + _pos), "%f %f", &x, &y);
+      #endif
 
       _OBJtexcoords.push_back(x);
       _OBJtexcoords.push_back(y);
@@ -154,7 +162,11 @@ namespace ng
     {
       float x, y, z;
 
-      sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
+      #ifdef _WIN32
+        sscanf_s((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
+      #else
+        sscanf((const char *)(buff.getPtr() + _pos), "%f %f %f", &x, &y, &z);
+      #endif
 
       _OBJnormals.push_back(x);
       _OBJnormals.push_back(y);
@@ -167,8 +179,13 @@ namespace ng
       int x2, y2, z2;
       int x3, y3, z3;
 
-      sscanf_s((const char *)(buff.getPtr() + _pos), "%d/%d/%d %d/%d/%d %d/%d/%d",
-        &x1, &y1, &z1, &x2, &y2, &z2, &x3, &y3, &z3);
+      #ifdef _WIN32
+        sscanf_s((const char *)(buff.getPtr() + _pos), "%d/%d/%d %d/%d/%d %d/%d/%d",
+          &x1, &y1, &z1, &x2, &y2, &z2, &x3, &y3, &z3);
+      #else
+        sscanf((const char *)(buff.getPtr() + _pos), "%d/%d/%d %d/%d/%d %d/%d/%d",
+          &x1, &y1, &z1, &x2, &y2, &z2, &x3, &y3, &z3);
+      #endif
 
       _OBJfaces.push_back(x1);
       _OBJfaces.push_back(y1);
