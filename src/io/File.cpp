@@ -1,7 +1,5 @@
 #include "io/File.hpp"
-
-#include <exception>
-#include <iostream>
+#include "exceptions/ErrorException.hpp"
 
 namespace ng
 {
@@ -49,9 +47,8 @@ namespace ng
 
     void File::readAll(ng::io::Buffer &buffer)
     {
-      // TODO: replace by a real exception with a what
       if (!_file.is_open())
-        throw new std::exception;
+        throw ErrorException("Cannot read data without opening a file");
 
       std::size_t length = size();
 
@@ -70,9 +67,8 @@ namespace ng
     {
       std::ios_base::openmode mode = (std::ios_base::openmode) 0;
 
-      // TODO: replace by a real exception with a what
       if (_file.is_open() || _filename.length() < 1)
-        throw new std::exception;
+        throw ErrorException("Bad filename or file already open");
 
       mode |= (_opts & READ) ? std::fstream::in : (std::ios_base::openmode) 0;
       mode |= (_opts & WRITE) ? std::fstream::out : (std::ios_base::openmode) 0;
@@ -80,9 +76,8 @@ namespace ng
 
       _file.open(_filename, mode);
 
-      // TODO: throws right exception with right error message
       if (!_file.is_open())
-        throw new std::exception;
+        throw ErrorException(std::strerror(errno));
     }
   }
 }
