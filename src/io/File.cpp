@@ -1,6 +1,9 @@
 #include "io/File.hpp"
 #include "exceptions/ErrorException.hpp"
 
+#include <cerrno>
+#include <cstring>
+
 namespace ng
 {
   namespace io
