@@ -6,6 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(ng)
 
 set(SRCS
+    src/maths/Random.cpp
     src/utils/Logger.cpp
     src/graphics/impl/GLFW/GLFWWindow.cpp
     src/graphics/opengl/GLShader.cpp
