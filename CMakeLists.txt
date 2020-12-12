@@ -7,6 +7,7 @@ project(ng)
 
 set(SRCS
     src/maths/Random.cpp
+    src/maths/PerlinNoise.cpp
     src/utils/Logger.cpp
     src/graphics/impl/GLFW/GLFWWindow.cpp
     src/graphics/opengl/GLShader.cpp
