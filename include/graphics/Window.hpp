@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Event.hpp"
+
 namespace ng
 {
   namespace graphics
@@ -16,7 +18,7 @@ namespace ng
         virtual bool isOpen() = 0;
 
         virtual void draw() = 0;
-        virtual void pollEvents() = 0;
+        virtual void pollEvents(ng::graphics::Event &) = 0;
 
         virtual std::int32_t getWidth() const = 0;
         virtual std::int32_t getHeight() const = 0;

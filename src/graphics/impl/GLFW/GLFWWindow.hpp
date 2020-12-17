@@ -6,6 +6,8 @@
 #include <cstdint>
 
 #include "graphics/Window.hpp"
+#include "GLFWKeyboard.hpp"
+#include "GLFWMouse.hpp"
 
 namespace ng
 {
@@ -24,13 +26,18 @@ namespace ng
           bool isOpen() override;
 
           void draw() override;
-          void pollEvents() override;
+          void pollEvents(ng::graphics::Event &) override;
 
           std::int32_t getWidth() const override;
           std::int32_t getHeight() const override;
 
           void onKey(int, int, int, int);
+          void onText(unsigned int);
           void onResize(int, int);
+          void onMouseMove(double, double);
+          void onMouseEnter(int);
+          void onMouseButton(int, int, int);
+          void onMouseScroll(double, double);
 
         private:
           void _throwGLFWError();
@@ -39,6 +46,8 @@ namespace ng
           bool _initialized;
           std::int32_t _width;
           std::int32_t _height;
+
+          ng::graphics::Event *_event;
       };
     };
   };
