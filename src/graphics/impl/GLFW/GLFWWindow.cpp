@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include "GLFWWindow.hpp"
 #include "exceptions/ErrorException.hpp"
 
@@ -56,11 +58,17 @@ namespace ng
         _initialized = false;
         _width = 0;
         _height = 0;
+        _keyboard = nullptr;
+        _mouse = nullptr;
         _event = nullptr;
       }
 
       GLFWWindow::~GLFWWindow()
       {
+        if (_mouse)
+          delete _mouse;
+        if (_keyboard)
+          delete _keyboard;
         if (_initialized)
           glfwTerminate();
       }
@@ -103,6 +111,9 @@ namespace ng
           throw ErrorException("Failed to initialize OpenGL extensions");
         
         glEnable(GL_DEPTH_TEST);
+
+        _keyboard = new GLFWKeyboard(this);
+        _mouse = new GLFWMouse(this);
       }
 
       void GLFWWindow::close()
@@ -139,6 +150,16 @@ namespace ng
         return (_height);
       }
 
+      ng::graphics::Keyboard *GLFWWindow::getKeyboard()
+      {
+        return (_keyboard);
+      }
+
+      ng::graphics::Mouse *GLFWWindow::getMouse()
+      {
+        return (_mouse);
+      }
+
       void GLFWWindow::onKey(int key, int scancode, int actions, int mods)
       {
         // Setup event type
@@ -159,8 +180,8 @@ namespace ng
 
         // Setup key value
         if (key != GLFW_KEY_UNKNOWN && key > 0 &&
-          static_cast<std::size_t>(key) < ng::graphics::impl::GLFWKeyboard::mappingSize)
-          _event->key.key = ng::graphics::impl::GLFWKeyboard::mapping[key];
+          static_cast<std::size_t>(key) < ng::graphics::impl::GLFWKeyboard::glfwToNgSize)
+          _event->key.key = ng::graphics::impl::GLFWKeyboard::glfwToNg[key];
         else
           _event->key.key = ng::graphics::Keyboard::UNKNOWN;
 
@@ -227,8 +248,8 @@ namespace ng
 
         // Setup key value
         if (button != GLFW_KEY_UNKNOWN && button > 0 &&
-          static_cast<std::size_t>(button) < ng::graphics::impl::GLFWMouse::mappingSize)
-          _event->button.key = ng::graphics::impl::GLFWMouse::mapping[button];
+          static_cast<std::size_t>(button) < ng::graphics::impl::GLFWMouse::glfwToNgSize)
+          _event->button.key = ng::graphics::impl::GLFWMouse::glfwToNg[button];
         else
           _event->button.key = ng::graphics::Mouse::UNKNOWN;
 
@@ -254,6 +275,11 @@ namespace ng
         
         if (glfwGetError(&msg) != GLFW_NO_ERROR)
           throw ErrorException(msg);
+      }
+
+      ::GLFWwindow *GLFWWindow::getHandle() const
+      {
+        return (_window);
       }
     }
   }

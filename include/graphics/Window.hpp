@@ -23,6 +23,9 @@ namespace ng
         virtual std::int32_t getWidth() const = 0;
         virtual std::int32_t getHeight() const = 0;
 
+        virtual ng::graphics::Keyboard *getKeyboard() = 0;
+        virtual ng::graphics::Mouse *getMouse() = 0;
+
         static Window* create();
     };
   };

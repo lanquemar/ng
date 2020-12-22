@@ -7,6 +7,13 @@ namespace ng
     class Keyboard
     {
       public:
+        // See further down for declaration
+        enum Key;
+
+        virtual ~Keyboard() {}
+
+        virtual bool isKeyPressed(ng::graphics::Keyboard::Key) = 0;
+
         enum Key
         {
           UNKNOWN = -1,

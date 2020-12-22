@@ -8,8 +8,8 @@ namespace ng
   {
     namespace impl
     {
-      const std::size_t GLFWKeyboard::mappingSize = GLFW_KEY_LAST + 1;
-      const ng::graphics::Keyboard::Key GLFWKeyboard::mapping[mappingSize] = {
+      const std::size_t GLFWKeyboard::glfwToNgSize = GLFW_KEY_LAST + 1;
+      const ng::graphics::Keyboard::Key GLFWKeyboard::glfwToNg[glfwToNgSize] = {
         ng::graphics::Keyboard::UNKNOWN,       // 0
         ng::graphics::Keyboard::UNKNOWN,       // 1
         ng::graphics::Keyboard::UNKNOWN,       // 2
@@ -359,6 +359,126 @@ namespace ng
         ng::graphics::Keyboard::RIGHT_ALT,     // 346 GLFW_KEY_RIGHT_ALT
         ng::graphics::Keyboard::RIGHT_SYSTEM,  // 347 GLFW_KEY_RIGHT_SUPER
         ng::graphics::Keyboard::MENU           // 348 GLFW_KEY_MENU
+      };
+
+      const std::size_t GLFWKeyboard::ngToGlfwSize = ng::graphics::Keyboard::MENU + 1;
+      const int GLFWKeyboard::ngToGlfw[ngToGlfwSize] = {
+        GLFW_KEY_A,             // 0 A
+        GLFW_KEY_B,             // 1 B
+        GLFW_KEY_C,             // 2 C
+        GLFW_KEY_D,             // 3 D
+        GLFW_KEY_E,             // 4 E
+        GLFW_KEY_F,             // 5 F
+        GLFW_KEY_G,             // 6 G
+        GLFW_KEY_H,             // 7 H
+        GLFW_KEY_I,             // 8 I
+        GLFW_KEY_J,             // 9 J
+        GLFW_KEY_K,             // 10 K
+        GLFW_KEY_L,             // 11 L
+        GLFW_KEY_M,             // 12 M
+        GLFW_KEY_N,             // 13 N
+        GLFW_KEY_O,             // 14 O
+        GLFW_KEY_P,             // 15 P
+        GLFW_KEY_Q,             // 16 Q
+        GLFW_KEY_R,             // 17 R
+        GLFW_KEY_S,             // 18 S
+        GLFW_KEY_T,             // 19 T
+        GLFW_KEY_U,             // 20 U
+        GLFW_KEY_V,             // 21 V
+        GLFW_KEY_W,             // 22 W
+        GLFW_KEY_X,             // 23 X
+        GLFW_KEY_Y,             // 24 Y
+        GLFW_KEY_Z,             // 25 Z
+        GLFW_KEY_0,             // 26 NUM_0
+        GLFW_KEY_1,             // 27 NUM_1
+        GLFW_KEY_2,             // 28 NUM_2
+        GLFW_KEY_3,             // 29 NUM_3
+        GLFW_KEY_4,             // 30 NUM_4
+        GLFW_KEY_5,             // 31 NUM_5
+        GLFW_KEY_6,             // 32 NUM_6
+        GLFW_KEY_7,             // 33 NUM_7
+        GLFW_KEY_8,             // 34 NUM_8
+        GLFW_KEY_9,             // 35 NUM_9
+        GLFW_KEY_ESCAPE,        // 36 ESCAPE
+        GLFW_KEY_SPACE,         // 37 SPACE
+        GLFW_KEY_APOSTROPHE,    // 38 APOSTROPHE
+        GLFW_KEY_COMMA,         // 39 COMMA
+        GLFW_KEY_MINUS,         // 40 MINUS
+        GLFW_KEY_PERIOD,        // 41 PERIOD
+        GLFW_KEY_SLASH,         // 42 SLASH
+        GLFW_KEY_SEMICOLON,     // 43 SEMICOLON
+        GLFW_KEY_EQUAL,         // 44 EQUAL - GLFW_KEY_KP_EQUAL is NOT mapped
+        GLFW_KEY_LEFT_BRACKET,  // 45 LEFT_BRACKET
+        GLFW_KEY_BACKSLASH,     // 46 BACKSLASH
+        GLFW_KEY_RIGHT_BRACKET, // 47 RIGHT_BRACKET
+        GLFW_KEY_GRAVE_ACCENT,  // 48 GRAVE_ACCENT
+        GLFW_KEY_ENTER,         // 49 ENTER - GLFW_KEY_KP_ENTER is NOT mapped
+        GLFW_KEY_TAB,           // 50 TAB
+        GLFW_KEY_BACKSPACE,     // 51 BACKSPACE
+        GLFW_KEY_INSERT,        // 52 INSERT
+        GLFW_KEY_DELETE,        // 53 DELETE
+        GLFW_KEY_RIGHT,         // 54 RIGHT
+        GLFW_KEY_LEFT,          // 55 LEFT
+        GLFW_KEY_DOWN,          // 56 DOWN
+        GLFW_KEY_UP,            // 57 UP
+        GLFW_KEY_PAGE_UP,       // 58 PAGE_UP
+        GLFW_KEY_PAGE_DOWN,     // 59 PAGE_DOWN
+        GLFW_KEY_HOME,          // 60 HOME
+        GLFW_KEY_END,           // 61 END
+        GLFW_KEY_CAPS_LOCK,     // 62 CAPS_LOCK
+        GLFW_KEY_SCROLL_LOCK,   // 63 SCROLL_LOCK
+        GLFW_KEY_NUM_LOCK,      // 64 NUM_LOCK
+        GLFW_KEY_PRINT_SCREEN,  // 65 PRINT_SCREEN
+        GLFW_KEY_PAUSE,         // 66 PAUSE
+        GLFW_KEY_F1,            // 67 F1
+        GLFW_KEY_F2,            // 68 F2
+        GLFW_KEY_F3,            // 69 F3
+        GLFW_KEY_F4,            // 70 F4
+        GLFW_KEY_F5,            // 71 F5
+        GLFW_KEY_F6,            // 72 F6
+        GLFW_KEY_F7,            // 73 F7
+        GLFW_KEY_F8,            // 74 F8
+        GLFW_KEY_F9,            // 75 F9
+        GLFW_KEY_F10,           // 76 F10
+        GLFW_KEY_F11,           // 77 F11
+        GLFW_KEY_F12,           // 78 F12
+        GLFW_KEY_F13,           // 79 F13
+        GLFW_KEY_F14,           // 80 F14
+        GLFW_KEY_F15,           // 81 F15
+        GLFW_KEY_F16,           // 82 F16
+        GLFW_KEY_F17,           // 83 F17
+        GLFW_KEY_F18,           // 84 F18
+        GLFW_KEY_F19,           // 85 F19
+        GLFW_KEY_F20,           // 86 F20
+        GLFW_KEY_F21,           // 87 F21
+        GLFW_KEY_F22,           // 88 F22
+        GLFW_KEY_F23,           // 89 F23
+        GLFW_KEY_F24,           // 90 F24
+        GLFW_KEY_F25,           // 91 F25
+        GLFW_KEY_KP_0,          // 92 NUMPAD_0
+        GLFW_KEY_KP_1,          // 93 NUMPAD_1
+        GLFW_KEY_KP_2,          // 94 NUMPAD_2
+        GLFW_KEY_KP_3,          // 95 NUMPAD_3
+        GLFW_KEY_KP_4,          // 96 NUMPAD_4
+        GLFW_KEY_KP_5,          // 97 NUMPAD_5
+        GLFW_KEY_KP_6,          // 98 NUMPAD_6
+        GLFW_KEY_KP_7,          // 99 NUMPAD_7
+        GLFW_KEY_KP_8,          // 100 NUMPAD_8
+        GLFW_KEY_KP_9,          // 101 NUMPAD_9
+        GLFW_KEY_KP_DECIMAL,    // 102 DECIMAL
+        GLFW_KEY_KP_DIVIDE,     // 103 DIVIDE
+        GLFW_KEY_KP_MULTIPLY,   // 104 MULTIPLY
+        GLFW_KEY_KP_SUBTRACT,   // 105 SUBSTRACT
+        GLFW_KEY_KP_ADD,        // 106 ADD
+        GLFW_KEY_LEFT_SHIFT,    // 107 LEFT_SHIFT
+        GLFW_KEY_LEFT_CONTROL,  // 108 LEFT_CONTROL
+        GLFW_KEY_LEFT_ALT,      // 109 LEFT_ALT
+        GLFW_KEY_LEFT_SUPER,    // 110 LEFT_SYSTEM
+        GLFW_KEY_RIGHT_SHIFT,   // 111 RIGHT_SHIFT
+        GLFW_KEY_RIGHT_CONTROL, // 112 RIGHT_CONTROL
+        GLFW_KEY_RIGHT_ALT,     // 113 RIGHT_ALT
+        GLFW_KEY_RIGHT_SUPER,   // 114 RIGHT_SYSTEM
+        GLFW_KEY_MENU           // 115 MENU
       };
     }
   }

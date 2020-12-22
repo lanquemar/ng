@@ -12,11 +12,24 @@ namespace ng
   {
     namespace impl
     {
-      class GLFWKeyboard
+      class GLFWWindow;
+
+      class GLFWKeyboard : public ng::graphics::Keyboard
       {
         public:
-          static const std::size_t mappingSize;
-          static const ng::graphics::Keyboard::Key mapping[];
+          GLFWKeyboard(GLFWWindow *);
+          ~GLFWKeyboard();
+
+          bool isKeyPressed(ng::graphics::Keyboard::Key) override;
+
+          static const std::size_t glfwToNgSize;
+          static const ng::graphics::Keyboard::Key glfwToNg[];
+
+          static const std::size_t ngToGlfwSize;
+          static const int ngToGlfw[];
+
+        private:
+          ::GLFWwindow *_window;
       };
     };
   };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace ng
 {
   namespace graphics
@@ -7,6 +9,14 @@ namespace ng
     class Mouse
     {
       public:
+        // See further down for declaration
+        enum Key;
+
+        virtual ~Mouse() {}
+
+        virtual bool isButtonPressed(ng::graphics::Mouse::Key) const = 0;
+        virtual glm::ivec2 getPosition() const = 0;
+
         enum Key
         {
           UNKNOWN = -1,

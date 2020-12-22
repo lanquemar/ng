@@ -12,11 +12,25 @@ namespace ng
   {
     namespace impl
     {
-      class GLFWMouse
+      class GLFWWindow;
+
+      class GLFWMouse : public ng::graphics::Mouse
       {
         public:
-          static const std::size_t mappingSize;
-          static const ng::graphics::Mouse::Key mapping[];
+          GLFWMouse(GLFWWindow *);
+          ~GLFWMouse();
+
+          bool isButtonPressed(ng::graphics::Mouse::Key) const override;
+          glm::ivec2 getPosition() const override;
+
+          static const std::size_t glfwToNgSize;
+          static const ng::graphics::Mouse::Key glfwToNg[];
+
+          static const std::size_t ngToGlfwSize;
+          static const int ngToGlfw[];
+
+        private:
+          ::GLFWwindow *_window;
       };
     };
   };
