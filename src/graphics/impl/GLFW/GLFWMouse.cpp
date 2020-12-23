@@ -19,7 +19,7 @@ namespace ng
 
       bool GLFWMouse::isButtonPressed(ng::graphics::Mouse::Key button) const
       {
-        if (button > 0 && button < ng::graphics::impl::GLFWMouse::ngToGlfwSize)
+        if (button >= 0 && button < ng::graphics::impl::GLFWMouse::ngToGlfwSize)
           return (::glfwGetMouseButton(_window, ng::graphics::impl::GLFWMouse::ngToGlfw[button]) == GLFW_PRESS);
         return (false);
       }

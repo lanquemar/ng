@@ -19,7 +19,7 @@ namespace ng
 
       bool GLFWKeyboard::isKeyPressed(ng::graphics::Keyboard::Key key)
       {
-        if (key > 0 && key < ng::graphics::impl::GLFWKeyboard::ngToGlfwSize)
+        if (key >= 0 && key < ng::graphics::impl::GLFWKeyboard::ngToGlfwSize)
           return (::glfwGetKey(_window, ng::graphics::impl::GLFWKeyboard::ngToGlfw[key]) == GLFW_PRESS);
         return (false);
       }
