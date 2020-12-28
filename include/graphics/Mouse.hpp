@@ -10,14 +10,14 @@ namespace ng
     {
       public:
         // See further down for declaration
-        enum Key;
+        enum Key: int;
 
         virtual ~Mouse() {}
 
         virtual bool isButtonPressed(ng::graphics::Mouse::Key) const = 0;
         virtual glm::ivec2 getPosition() const = 0;
 
-        enum Key
+        enum Key: int
         {
           UNKNOWN = -1,
           BUTTON_1 = 0,

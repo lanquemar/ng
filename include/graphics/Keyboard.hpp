@@ -8,13 +8,13 @@ namespace ng
     {
       public:
         // See further down for declaration
-        enum Key;
+        enum Key: int;
 
         virtual ~Keyboard() {}
 
         virtual bool isKeyPressed(ng::graphics::Keyboard::Key) = 0;
 
-        enum Key
+        enum Key: int
         {
           UNKNOWN = -1,
           A = 0,
