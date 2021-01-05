@@ -9,6 +9,8 @@ set(SRCS
     src/maths/Random.cpp
     src/maths/PerlinNoise.cpp
     src/utils/Logger.cpp
+    src/system/Clock.cpp
+    src/system/Duration.cpp
     src/graphics/impl/GLFW/GLFWKeyboard_mapping.cpp
     src/graphics/impl/GLFW/GLFWKeyboard.cpp
     src/graphics/impl/GLFW/GLFWMouse_mapping.cpp
