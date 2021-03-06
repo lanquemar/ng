@@ -18,7 +18,7 @@ namespace ng
         void restart();
 
       private:
-        std::chrono::steady_clock::time_point _start;
+        std::chrono::high_resolution_clock::time_point _start;
     };
   };
 };
