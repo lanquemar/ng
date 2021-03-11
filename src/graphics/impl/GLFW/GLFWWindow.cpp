@@ -1,48 +1,79 @@
+// MIT License
+//
+// Copyright (c) 2021 Adrien Vasseur
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #include <glad/glad.h>
 
 #include "GLFWWindow.hpp"
 #include "exceptions/ErrorException.hpp"
 
 // GLFW callbacks
-static void onKey(GLFWwindow *window, int key, int scancode, int actions, int mods)
+static void onKey(GLFWwindow *window, int key, int scancode,
+  int actions, int mods)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onKey(key, scancode, actions, mods);
 }
 
 static void onText(GLFWwindow *window, unsigned int codepoint)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onText(codepoint);
 }
 
 static void onResize(GLFWwindow *window, int width, int height)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onResize(width, height);
 }
 
 static void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onMouseMove(xpos, ypos);
 }
 
 static void onMouseEnter(GLFWwindow* window, int entered)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onMouseEnter(entered);
 }
 
-static void onMouseButton(GLFWwindow* window, int button, int action, int mods)
+static void onMouseButton(GLFWwindow* window, int button,
+  int action, int mods)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onMouseButton(button, action, mods);
 }
 
 static void onMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
 {
-  ng::graphics::impl::GLFWWindow* obj = (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
+  ng::graphics::impl::GLFWWindow* obj =
+    (ng::graphics::impl::GLFWWindow *) glfwGetWindowUserPointer(window);
   obj->onMouseScroll(xoffset, yoffset);
 }
 
@@ -109,7 +140,7 @@ namespace ng
 
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
           throw ErrorException("Failed to initialize OpenGL extensions");
-        
+
         glEnable(GL_DEPTH_TEST);
 
         _keyboard = new GLFWKeyboard(this);
@@ -133,7 +164,7 @@ namespace ng
 
       void GLFWWindow::pollEvents(ng::graphics::Event &event)
       {
-        // TODO: here only one event handled at a time
+        // TODO(Lanquemar): here only one event handled at a time
         // we should create an event queue to stack them
         _event = &event;
         _event->type = ng::graphics::Event::NONE;
@@ -180,7 +211,8 @@ namespace ng
 
         // Setup key value
         if (key != GLFW_KEY_UNKNOWN && key > 0 &&
-          static_cast<std::size_t>(key) < ng::graphics::impl::GLFWKeyboard::glfwToNgSize)
+          static_cast<std::size_t>(key) <
+          ng::graphics::impl::GLFWKeyboard::glfwToNgSize)
           _event->key.key = ng::graphics::impl::GLFWKeyboard::glfwToNg[key];
         else
           _event->key.key = ng::graphics::Keyboard::UNKNOWN;
@@ -196,7 +228,7 @@ namespace ng
 
       void GLFWWindow::onText(unsigned int codepoint)
       {
-        // TODO: implement
+        // TODO(Lanquemar): implement
       }
 
       void GLFWWindow::onResize(int width, int height)
@@ -248,7 +280,8 @@ namespace ng
 
         // Setup key value
         if (button != GLFW_KEY_UNKNOWN && button > 0 &&
-          static_cast<std::size_t>(button) < ng::graphics::impl::GLFWMouse::glfwToNgSize)
+          static_cast<std::size_t>(button) <
+          ng::graphics::impl::GLFWMouse::glfwToNgSize)
           _event->button.key = ng::graphics::impl::GLFWMouse::glfwToNg[button];
         else
           _event->button.key = ng::graphics::Mouse::UNKNOWN;
@@ -272,7 +305,7 @@ namespace ng
       void GLFWWindow::_throwGLFWError()
       {
         const char *msg;
-        
+
         if (glfwGetError(&msg) != GLFW_NO_ERROR)
           throw ErrorException(msg);
       }
@@ -281,6 +314,6 @@ namespace ng
       {
         return (_window);
       }
-    }
-  }
-}
+    } /* namespace impl */
+  } /* namespace graphics */
+} /* namespace ng */
