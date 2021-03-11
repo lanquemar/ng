@@ -17,4 +17,4 @@ jobs:
 
     - name: Run cpplint
       shell: bash
-      run: cpplint --recursive --filter="-whitespace/braces,-whitespace/indent" include src
+      run: cpplint --recursive --filter="-whitespace/braces,-whitespace/indent,-whitespace/comments,-runtime/indentation_namespace,-build/c++11,-whitespace/empty_loop_body" include src
