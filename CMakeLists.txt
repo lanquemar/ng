@@ -22,7 +22,6 @@ set(SRCS
     src/io/formats/OBJFile.cpp
     src/io/Buffer.cpp
     src/io/File.cpp
-    src/Sample.cpp
 )
 
 include(FetchContent)
