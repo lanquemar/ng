@@ -1,3 +1,25 @@
+// MIT License
+//
+// Copyright (c) 2021 Adrien Vasseur
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #include <map>
 #include <tuple>
 
@@ -14,15 +36,14 @@ namespace ng
   {
     OBJFile::OBJFile()
     {
-
     }
 
     OBJFile::~OBJFile()
     {
-
     }
 
-    void OBJFile::loadFromFile(ng::graphics::Mesh &mesh, const std::string &filename)
+    void OBJFile::loadFromFile(ng::graphics::Mesh &mesh,
+      const std::string &filename)
     {
       ng::io::Buffer buff;
       ng::io::File file;
@@ -111,20 +132,24 @@ namespace ng
       return (true);
     }
 
-    bool OBJFile::_consume(ng::io::Buffer &buff, const std::string &alphabet)
+    bool OBJFile::_consume(ng::io::Buffer &buff,
+      const std::string &alphabet)
     {
       std::size_t backup = _pos;
 
-      while (_pos < buff.size() && alphabet.find(buff[_pos]) != std::string::npos)
+      while (_pos < buff.size() &&
+        alphabet.find(buff[_pos]) != std::string::npos)
         _pos++;
       return (!(backup == _pos));
     }
 
-    bool OBJFile::_consumeUntil(ng::io::Buffer &buff, const std::string &alphabet)
+    bool OBJFile::_consumeUntil(ng::io::Buffer &buff,
+      const std::string &alphabet)
     {
       std::size_t backup = _pos;
 
-      while (_pos < buff.size() && alphabet.find(buff[_pos]) == std::string::npos)
+      while (_pos < buff.size() &&
+        alphabet.find(buff[_pos]) == std::string::npos)
         _pos++;
       return (!(backup == _pos));
     }
@@ -180,10 +205,12 @@ namespace ng
       int x3, y3, z3;
 
       #ifdef _WIN32
-        sscanf_s((const char *)(buff.getPtr() + _pos), "%d/%d/%d %d/%d/%d %d/%d/%d",
+        sscanf_s((const char *)(buff.getPtr() + _pos),
+          "%d/%d/%d %d/%d/%d %d/%d/%d",
           &x1, &y1, &z1, &x2, &y2, &z2, &x3, &y3, &z3);
       #else
-        sscanf((const char *)(buff.getPtr() + _pos), "%d/%d/%d %d/%d/%d %d/%d/%d",
+        sscanf((const char *)(buff.getPtr() + _pos),
+          "%d/%d/%d %d/%d/%d %d/%d/%d",
           &x1, &y1, &z1, &x2, &y2, &z2, &x3, &y3, &z3);
       #endif
 
@@ -200,20 +227,24 @@ namespace ng
       _OBJfaces.push_back(z3);
     }
 
-    // OBJ format imposes 3 different indexes (vertice, uv texture, normal) for each vertice
-    // where OpenGL needs only one index for each vertice
-    // For the conversion, we store a unique tuple (vertice, uv texture, normal) for the OBJ format
-    // linked to a unique OpenGL index
+    // OBJ format imposes 3 different indexes (vertice, uv texture, normal)
+    // for each vertice where OpenGL needs only one index for each vertice
+    // For the conversion, we store a unique tuple (vertice, uv texture, normal)
+    // for the OBJ format linked to a unique OpenGL index
     void OBJFile::_generate(ng::graphics::Mesh &mesh)
     {
-      std::map<std::tuple<std::size_t, std::size_t, std::size_t>, std::size_t> objIndices;
+      std::map<
+        std::tuple<std::size_t, std::size_t, std::size_t>,
+        std::size_t> objIndices;
       std::vector<float> vertices, uvs, normals;
       std::vector<std::uint32_t> indices;
 
       for (std::size_t i = 0; i < _OBJfaces.size(); i += 3)
       {
-        auto it = objIndices.find(std::tuple<std::size_t, std::size_t, std::size_t>(_OBJfaces[i], _OBJfaces[i + 1], _OBJfaces[i + 2]));
-      
+        auto it = objIndices.find(
+          std::tuple<std::size_t, std::size_t, std::size_t>(
+            _OBJfaces[i], _OBJfaces[i + 1], _OBJfaces[i + 2]));
+
         if (it != objIndices.end())
           indices.push_back(it->second);
         else
@@ -223,8 +254,9 @@ namespace ng
           std::size_t objTexcoordIndex = (_OBJfaces[i + 1] - 1) * 2;
           std::size_t objNormalsIndex = (_OBJfaces[i + 2] - 1) * 3;
 
-          objIndices[std::tuple<std::size_t, std::size_t, std::size_t>(_OBJfaces[i], _OBJfaces[i + 1], _OBJfaces[i + 2])] = newIndex;
-        
+          objIndices[std::tuple<std::size_t, std::size_t, std::size_t>(
+            _OBJfaces[i], _OBJfaces[i + 1], _OBJfaces[i + 2])] = newIndex;
+
           vertices.push_back(_OBJvertices[objVerticeIndex]);
           vertices.push_back(_OBJvertices[objVerticeIndex + 1]);
           vertices.push_back(_OBJvertices[objVerticeIndex + 2]);
@@ -245,5 +277,5 @@ namespace ng
       mesh.setNormals(normals);
       mesh.setIndices(indices);
     }
-  }
-}
+  } /* namespace io */
+} /* namespace ng */

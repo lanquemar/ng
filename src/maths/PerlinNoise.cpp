@@ -1,3 +1,25 @@
+// MIT License
+//
+// Copyright (c) 2021 Adrien Vasseur
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #include "maths/PerlinNoise.hpp"
 
 #include <cmath>
@@ -51,9 +73,12 @@ namespace ng
     double PerlinNoise::get(double x, double y, double z) const
     {
       // Floored x y and z
-      const std::int32_t xi = static_cast<std::int32_t>(std::floor(x)) & (_permutationTableSize - 1);
-      const std::int32_t yi = static_cast<std::int32_t>(std::floor(y)) & (_permutationTableSize - 1);
-      const std::int32_t zi = static_cast<std::int32_t>(std::floor(z)) & (_permutationTableSize - 1);
+      const std::int32_t xi =
+        static_cast<std::int32_t>(std::floor(x)) & (_permutationTableSize - 1);
+      const std::int32_t yi =
+        static_cast<std::int32_t>(std::floor(y)) & (_permutationTableSize - 1);
+      const std::int32_t zi =
+        static_cast<std::int32_t>(std::floor(z)) & (_permutationTableSize - 1);
 
       // Floating values of x and y
       const double xo = x - std::floor(x);
@@ -66,28 +91,41 @@ namespace ng
       const double w = _fade(zo);
 
       // Get random values for each corner
-      const std::int32_t A = (_permutationTable[xi] + yi) % _permutationTableSize;
-      const std::int32_t AA = (_permutationTable[A] + zi) % _permutationTableSize;
-      const std::int32_t AB = (_permutationTable[(A + 1) % _permutationTableSize] + zi) % _permutationTableSize;
-      const std::int32_t B = (_permutationTable[(xi + 1) % _permutationTableSize] + yi) % _permutationTableSize;
-      const std::int32_t BA = (_permutationTable[B] + zi) % _permutationTableSize;
-      const std::int32_t BB = (_permutationTable[(B + 1)  % _permutationTableSize] + zi) % _permutationTableSize;
+      const std::int32_t A =
+        (_permutationTable[xi] + yi) % _permutationTableSize;
+      const std::int32_t AA =
+        (_permutationTable[A] + zi) % _permutationTableSize;
+      const std::int32_t AB =
+        (_permutationTable[(A + 1) % _permutationTableSize] + zi) %
+        _permutationTableSize;
+      const std::int32_t B =
+        (_permutationTable[(xi + 1) % _permutationTableSize] + yi) %
+        _permutationTableSize;
+      const std::int32_t BA =
+        (_permutationTable[B] + zi) % _permutationTableSize;
+      const std::int32_t BB =
+        (_permutationTable[(B + 1)  % _permutationTableSize] + zi) %
+        _permutationTableSize;
 
       return (_lerp(w,
         _lerp(v,
           _lerp(u,
             _grad(_permutationTable[AA], xo, yo, zo),
-				    _grad(_permutationTable[BA], xo - 1, yo, zo)),
-				  _lerp(u,
-            _grad(_permutationTable[AB], xo, yo - 1, zo),
-				    _grad(_permutationTable[BB], xo - 1, yo - 1, zo))),
-				_lerp(v,
+            _grad(_permutationTable[BA], xo - 1, yo, zo)),
           _lerp(u,
-            _grad(_permutationTable[(AA + 1) % _permutationTableSize], xo, yo, zo - 1),
-				    _grad(_permutationTable[(BA + 1) % _permutationTableSize], xo - 1, yo, zo - 1)),
-				  _lerp(u,
-            _grad(_permutationTable[(AB + 1) % _permutationTableSize], xo, yo - 1, zo - 1),
-				    _grad(_permutationTable[(BB + 1) % _permutationTableSize], xo - 1, yo - 1, zo - 1)))));
+            _grad(_permutationTable[AB], xo, yo - 1, zo),
+            _grad(_permutationTable[BB], xo - 1, yo - 1, zo))),
+        _lerp(v,
+          _lerp(u,
+            _grad(_permutationTable[(AA + 1) % _permutationTableSize],
+              xo, yo, zo - 1),
+            _grad(_permutationTable[(BA + 1) % _permutationTableSize],
+              xo - 1, yo, zo - 1)),
+          _lerp(u,
+            _grad(_permutationTable[(AB + 1) % _permutationTableSize],
+              xo, yo - 1, zo - 1),
+            _grad(_permutationTable[(BB + 1) % _permutationTableSize],
+              xo - 1, yo - 1, zo - 1)))));
     }
 
     /*
@@ -110,7 +148,8 @@ namespace ng
     ** Returns fractal Brownian motion (fBm) of Perlin noise for (x, y, z) point
     ** Note: fractal parameters are fixed, could be useful to play with them
     */
-    double PerlinNoise::fractal(std::size_t octaves, double x, double y, double z) const
+    double PerlinNoise::fractal(std::size_t octaves, double x,
+      double y, double z) const
     {
       double output = 0.0f;
       double denom = 0.0f;
@@ -151,13 +190,14 @@ namespace ng
     /*
     ** Returns weight of hash according to (x, y, z) vector direction
     */
-    double PerlinNoise::_grad(std::uint32_t hash, double x, double y, double z) const
+    double PerlinNoise::_grad(std::uint32_t hash, double x,
+      double y, double z) const
     {
       const std::uint8_t h = hash & 15;
-			const double u = h < 8 ? x : y;
-			const double v = h < 4 ? y : h == 12 || h == 14 ? x : z;
+      const double u = h < 8 ? x : y;
+      const double v = h < 4 ? y : h == 12 || h == 14 ? x : z;
 
-			return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
+      return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
     }
 
     /*
@@ -166,11 +206,11 @@ namespace ng
     void PerlinNoise::_generatePermutationTable()
     {
       _permutationTable = new std::uint32_t[_permutationTableSize];
-      
+
       // Initialize array
       for (std::size_t i = 0; i < _permutationTableSize; i++)
         _permutationTable[i] = i;
-      
+
       // Shuffle it
       for (std::size_t i = 0; i < _permutationTableSize; i++)
       {
@@ -181,5 +221,5 @@ namespace ng
         _permutationTable[i] = saved;
       }
     }
-  }
-}
+  } /* namespace maths */
+} /* namespace ng */
