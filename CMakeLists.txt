@@ -6,6 +6,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(ng)
 
 set(SRCS
+    src/maths/AABB.cpp
+    src/maths/Ray.cpp
     src/maths/Random.cpp
     src/maths/PerlinNoise.cpp
     src/utils/Logger.cpp
