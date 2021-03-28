@@ -17,6 +17,8 @@
     * [PerlinNoise](https://en.wikipedia.org/wiki/Perlin_noise).
     * Random; based on the standard C library.
 * **system** module
+    * FrameAlloctor; to allocate memory from pre-allocated frames.
+    * StackAllocator; to allocate memory from stacked pieces of memory.
     * Clock.
     * Duration.
 * **utils** module
