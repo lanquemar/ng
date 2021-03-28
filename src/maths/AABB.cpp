@@ -46,7 +46,8 @@ namespace ng
     AABB AABB::operator+(const AABB &other) const
     {
       glm::vec3 minPos = glm::min(_pos, other.getPosition());
-      glm::vec3 maxPos = glm::max(_pos + _size, other.getPosition() + other.getSize());
+      glm::vec3 maxPos = glm::max(_pos + _size,
+        other.getPosition() + other.getSize());
 
       return (AABB(minPos, maxPos - minPos));
     }
@@ -55,7 +56,7 @@ namespace ng
     {
       return (_pos);
     }
-    
+
     glm::vec3 AABB::getSize() const
     {
       return (_size);
@@ -65,7 +66,7 @@ namespace ng
     {
       _pos = pos;
     }
-    
+
     void AABB::setSize(glm::vec3 size)
     {
       _size = size;
