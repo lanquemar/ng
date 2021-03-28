@@ -11,6 +11,8 @@ set(SRCS
     src/maths/Random.cpp
     src/maths/PerlinNoise.cpp
     src/utils/Logger.cpp
+    src/system/memory/FrameAllocator.cpp
+    src/system/memory/StackAllocator.cpp
     src/system/Clock.cpp
     src/system/Duration.cpp
     src/graphics/impl/GLFW/GLFWKeyboard_mapping.cpp
