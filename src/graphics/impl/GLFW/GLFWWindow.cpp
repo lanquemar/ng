@@ -210,7 +210,7 @@ namespace ng
         }
 
         // Setup key value
-        if (key != GLFW_KEY_UNKNOWN && key > 0 &&
+        if (key != GLFW_KEY_UNKNOWN && key >= 0 &&
           static_cast<std::size_t>(key) <
           ng::graphics::impl::GLFWKeyboard::glfwToNgSize)
           _event->key.key = ng::graphics::impl::GLFWKeyboard::glfwToNg[key];
@@ -279,7 +279,7 @@ namespace ng
         }
 
         // Setup key value
-        if (button != GLFW_KEY_UNKNOWN && button > 0 &&
+        if (button != GLFW_KEY_UNKNOWN && button >= 0 &&
           static_cast<std::size_t>(button) <
           ng::graphics::impl::GLFWMouse::glfwToNgSize)
           _event->button.key = ng::graphics::impl::GLFWMouse::glfwToNg[button];
