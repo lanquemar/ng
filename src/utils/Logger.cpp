@@ -40,9 +40,9 @@ namespace ng
     Log::Log(LogLevel level, std::ofstream &stream) :
       _level(level), _stream(stream)
     {
+      _printTimestamp();
       std::cout << prefixes[_level] << " ";
       _stream << prefixes[_level] << " ";
-      _printTimestamp();
     }
 
     Log::~Log()
